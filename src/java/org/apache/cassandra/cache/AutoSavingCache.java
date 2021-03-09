@@ -25,6 +25,7 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import com.datastax.driver.core.GuavaCompatibility;
 import org.cliffc.high_scale_lib.NonBlockingHashSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +58,7 @@ public class AutoSavingCache<K extends CacheKey, V> extends InstrumentingCache<K
     public interface IStreamFactory
     {
         InputStream getInputStream(File dataPath, File crcPath) throws IOException;
+
         OutputStream getOutputStream(File dataPath, File crcPath) throws FileNotFoundException;
     }
 
@@ -177,7 +179,7 @@ public class AutoSavingCache<K extends CacheKey, V> extends InstrumentingCache<K
                             cacheType);
                 es.shutdown();
             }
-        }, MoreExecutors.directExecutor());
+        }, GuavaCompatibility.INSTANCE.sameThreadExecutor());
 
         return cacheLoad;
     }
