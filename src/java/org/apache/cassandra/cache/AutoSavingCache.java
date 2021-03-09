@@ -58,6 +58,7 @@ public class AutoSavingCache<K extends CacheKey, V> extends InstrumentingCache<K
     public interface IStreamFactory
     {
         InputStream getInputStream(File dataPath, File crcPath) throws IOException;
+
         OutputStream getOutputStream(File dataPath, File crcPath) throws FileNotFoundException;
     }
 
